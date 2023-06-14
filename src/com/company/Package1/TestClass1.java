@@ -7,6 +7,6 @@ public class TestClass1 {
     }
 
 private static void tasl1() {
-    System.out.println("Поехали");
+    System.out.println("Поехали!");
 }
 }
