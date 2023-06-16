@@ -1,10 +1,31 @@
 package com.company;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Calculator {
-        public static void main(String[] args) {
+        public static void main(String[] args) throws IOException {
             Scanner scanner = new Scanner(System.in);
+            String soscan = scanner;
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String stringWithoutSpaces = deleteSpaces(scanner);
+            System.out.println(stringWithoutSpaces);
+//            int name = Integer.parseInt(reader.readLine());
+//            System.out.println(name);
 
+
+
+
+
+
+
+//            int intAge = Integer.parseInt(reader.readLine());
+
+
+/*
+            Scanner scanner = new Scanner(System.in);
+            double num1 = scanner.nextInt();
             System.out.print("Введите первое число: ");
             double num1 = scanner.nextDouble();
 
@@ -41,7 +62,12 @@ public class Calculator {
                     System.out.println("Ошибка: Некорректная операция");
             }
 
-            scanner.close();
+            scanner.close();*/
         }
+    public static String deleteSpaces(String string) {
+        //\s означает пробелы \s+ большие пробелы и табуляции ",?\\s+" (,? – запятые, которых может не быть
+        return string.replaceAll("\\s+","");
+
+    }
     }
 
