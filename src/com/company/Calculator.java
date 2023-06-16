@@ -4,70 +4,79 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
+import java.util.Scanner;
+
 public class Calculator {
-        public static void main(String[] args) throws IOException {
-            Scanner scanner = new Scanner(System.in);
-            String soscan = scanner;
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String stringWithoutSpaces = deleteSpaces(scanner);
-            System.out.println(stringWithoutSpaces);
-//            int name = Integer.parseInt(reader.readLine());
-//            System.out.println(name);
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Введите выражение: ");
+        String input = scanner.nextLine();
 
+        // Удаление пробелов и лишних символов
+        input = input.replaceAll("\\s+", "");
 
-
-
-
-
-//            int intAge = Integer.parseInt(reader.readLine());
-
-
-/*
-            Scanner scanner = new Scanner(System.in);
-            double num1 = scanner.nextInt();
-            System.out.print("Введите первое число: ");
-            double num1 = scanner.nextDouble();
-
-            System.out.print("Введите второе число: ");
-            double num2 = scanner.nextDouble();
-
-            System.out.println("Выберите операцию (+, -, *, /): ");
-            char operator = scanner.next().charAt(0);
-
-            double result;
-
-            switch (operator) {
-                case '+':
-                    result = num1 + num2;
-                    System.out.println("Результат: " + result);
-                    break;
-                case '-':
-                    result = num1 - num2;
-                    System.out.println("Результат: " + result);
-                    break;
-                case '*':
-                    result = num1 * num2;
-                    System.out.println("Результат: " + result);
-                    break;
-                case '/':
-                    if (num2 != 0) {
-                        result = num1 / num2;
-                        System.out.println("Результат: " + result);
-                    } else {
-                        System.out.println("Ошибка: Деление на ноль");
-                    }
-                    break;
-                default:
-                    System.out.println("Ошибка: Некорректная операция");
-            }
-
-            scanner.close();*/
+        // Проверка наличия оператора
+        if (!input.contains("+") && !input.contains("-") && !input.contains("*") && !input.contains("/")) {
+            System.out.println("Ошибка: Некорректный оператор");
+            return;
         }
-    public static String deleteSpaces(String string) {
-        //\s означает пробелы \s+ большие пробелы и табуляции ",?\\s+" (,? – запятые, которых может не быть
-        return string.replaceAll("\\s+","");
 
-    }
-    }
+        // Разделение строки на числа и оператор
+        String[] parts = input.split("[+\\-*/]");
 
+
+
+        // Проверка количества чисел и операторов
+        if (parts.length != 2) { //количество символов больше, чем два и/или одно из чисел массива >10
+            System.out.println("Ошибка: Некорректное количество чисел или операторов");
+            return;
+        }
+
+
+        double num1, num2;
+        try {
+            num1 = Double.parseDouble(parts[0]);
+            num2 = Double.parseDouble(parts[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("Ошибка: Некорректный формат чисел");
+            return;
+        }
+        if (num1 >10 || num2 > 10) { //Исключение?
+            System.out.println("Ошибка: Одно из введённых чисел больше 10");
+            return;
+        }
+
+
+        char operator = input.charAt(parts[0].length());
+
+        double result;
+
+        switch (operator) {
+            case '+':
+                result = num1 + num2;
+                System.out.println("Результат: " + result);
+                break;
+            case '-':
+                result = num1 - num2;
+                System.out.println("Результат: " + result);
+                break;
+            case '*':
+                result = num1 * num2;
+                System.out.println("Результат: " + result);
+                break;
+            case '/':
+                if (num2 != 0) {
+                    result = num1 / num2;
+                    System.out.println("Результат: " + result);
+                } else {
+                    System.out.println("Ошибка: Деление на ноль");
+                }
+                break;
+            default:
+                System.out.println("Ошибка: Некорректный оператор");
+        }
+
+        scanner.close();
+    }
+}
