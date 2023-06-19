@@ -1,3 +1,4 @@
+import java.nio.channels.ScatteringByteChannel;
 import java.util.Scanner;
 
 public class CalculatorLauncher {
@@ -14,12 +15,15 @@ class Calculator {
 //        System.out.print("Для вычисления введите только арабские или только римские числа от 0 до 10, /n вставив между ними один из операторов * / + - ");
 //        String input = scanner.nextLine();
 //        String input = "3 - IV";
-        String input = "V - 8";
+        String input = "1 +2 +3";
+//        String input = "VI / III";
+
 
         String result;
         input = StringManipulator.removeSpacesAndSymbols(input);
 
         if (!StringManipulator.containsOperator(input)) { // Проверка на наличие корректного опаратора
+
             System.out.println("Ошибка: Некорректный оператор");
             return;
         }
@@ -39,6 +43,7 @@ class Calculator {
             num2 = NumberConverter.convertRomanToArabic(parts[1]); //Конвертируем
             sum = CalculatorEngine.calculate(num1, num2, operator);
             if (sum > 0 ) {
+
                 result = NumberConverter.convertArabicToRoman(sum);
             } else {
                 System.out.print("Ошибка. В римском счислении нет отрицательных чисел");
@@ -103,6 +108,7 @@ class StringManipulator {
 
 class NumberConverter {
     public static int convertRomanToArabic(String number) {
+        if ((Integer.parseInt(number) < 10 || (Integer.parseInt(number)) > 10)) {
         switch (number) {
             case "I":
                 return 1;
@@ -124,9 +130,10 @@ class NumberConverter {
                 return 9;
             case "X":
                 return 10;
-            default:
-                return 11; //проверка на число >10
         }
+
+        }
+        return 0;
     }
 
     public static String convertArabicToRoman(int num) {
@@ -152,6 +159,8 @@ class NumberConverter {
 
 class CalculatorEngine {
     public static int calculate(int num1, int num2, char operator) {
+
+        //Добавить проверку на нам 1 и нам 2 >10
         switch (operator) {
             case '+':
                 return num1 + num2;
