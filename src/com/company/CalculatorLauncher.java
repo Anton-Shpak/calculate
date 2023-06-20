@@ -15,8 +15,8 @@ class Calculator {
 //        System.out.print("Для вычисления введите только арабские или только римские числа от 0 до 10, /n вставив между ними один из операторов * / + - ");
 //        String input = scanner.nextLine();
 //        String input = "3 - IV";
-        String input = "1 +2 +3";
-//        String input = "VI / III";
+//        String input = "1 +2 +3";
+        String input = "VI / III";
 
 
         String result;
@@ -39,6 +39,7 @@ class Calculator {
 
         int num1, num2, sum;
         if (StringManipulator.containsRomanNumerals(parts[0]) && StringManipulator.containsRomanNumerals(parts[1])) { //Если два операнда римские
+            //Проверку, что число меньше 10
             num1 = NumberConverter.convertRomanToArabic(parts[0]);
             num2 = NumberConverter.convertRomanToArabic(parts[1]); //Конвертируем
             sum = CalculatorEngine.calculate(num1, num2, operator);
