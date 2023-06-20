@@ -112,7 +112,7 @@ class NumberConverter {
                 if (num > 0 && num <= 10) {
                     return num;
                 } else {
-                    throw new IllegalArgumentException("Число должно быть от 1 до 10");
+                    throw new IllegalArgumentException("Число должно быть от 1 до 10"); //WTF
                 }
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Некорректное римское число или число больше 10");
