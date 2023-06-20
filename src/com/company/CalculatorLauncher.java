@@ -16,19 +16,17 @@ class Calculator {
 //        String input = scanner.nextLine();
 //        String input = "3 - IV";
 //        String input = "1 +2 +3";
-        String input = "VI / III";
+        String input = "11 / 0";
 
 
         String result;
         input = StringManipulator.removeSpacesAndSymbols(input);
 
-        if (!StringManipulator.containsOperator(input)) { // Проверка на наличие корректного опаратора
 
-            System.out.println("Ошибка: Некорректный оператор");
-            return;
-        }
 
-        String[] parts = StringManipulator.splitInput(input); //Порезать по оператору
+
+        String[] parts = StringManipulator.splitInput(input);
+        //Порезать по оператору
 
 
         if (parts.length != 2) { // Проверка на количество операндов
@@ -39,7 +37,7 @@ class Calculator {
 
         int num1, num2, sum;
         if (StringManipulator.containsRomanNumerals(parts[0]) && StringManipulator.containsRomanNumerals(parts[1])) { //Если два операнда римские
-            //Проверку, что число меньше 10
+
             num1 = NumberConverter.convertRomanToArabic(parts[0]);
             num2 = NumberConverter.convertRomanToArabic(parts[1]); //Конвертируем
             sum = CalculatorEngine.calculate(num1, num2, operator);
@@ -56,30 +54,10 @@ class Calculator {
                 num2 = Integer.parseInt(parts[1]);
                 result = String.valueOf(CalculatorEngine.calculate(num1, num2, operator));
             } catch (NumberFormatException e) {
-                System.out.println("Ошибка: Введены арабские и римские числа одновременно");
+                System.out.println("Ошибка: Должна быть введена только пара арабских или пара римских цифр, каждое число не больше 10");
                 return;
             }
         }
-
-        if (num1 > 10 || num2 > 10) {
-            System.out.println("Ошибка: Одно из введённых чисел больше 10");
-            return;
-        }
-
-
-
-//        int result = CalculatorEngine.calculate(num1, num2, operator);
-
-        //Если римские числа, то конвертируем араб в рим
-        //Проверка на отрицательное число перед отправкой\
-
-//        if (result.equals("Деление на ноль")) {
-//            System.out.println("Ошибка: Деление на ноль");
-//        } else {
-//            System.out.println("Результат: " + result);
-//        }
-
-
 
         System.out.println("Результат: " + result);
 
@@ -94,13 +72,19 @@ class StringManipulator {
         return input.replaceAll("\\s+", "");
     }
 
-    public static boolean containsOperator(String input) {
-        return input.contains("+") || input.contains("-") || input.contains("*") || input.contains("/");
-    }
+//    public static boolean containsOperator(String input) {
+//        return input.contains("+") || input.contains("-") || input.contains("*") || input.contains("/");
+//    }
 
     public static String[] splitInput(String input) {
-        return input.split("[+\\-*/]");
+        if (input.contains("+") || input.contains("-") || input.contains("*") || input.contains("/")) {
+            return input.split("[+\\-*/]");
+        } else {
+            throw new IllegalArgumentException("Некорректный оператор");
+        }
     }
+
+
 
     public static boolean containsRomanNumerals(String input) {
         return input.matches(".*[IVX].*");
@@ -109,7 +93,7 @@ class StringManipulator {
 
 class NumberConverter {
     public static int convertRomanToArabic(String number) {
-        if ((Integer.parseInt(number) < 10 || (Integer.parseInt(number)) > 10)) {
+
         switch (number) {
             case "I":
                 return 1;
@@ -133,8 +117,7 @@ class NumberConverter {
                 return 10;
         }
 
-        }
-        return 0;
+        return 11;
     }
 
     public static String convertArabicToRoman(int num) {
@@ -160,8 +143,10 @@ class NumberConverter {
 
 class CalculatorEngine {
     public static int calculate(int num1, int num2, char operator) {
-
-        //Добавить проверку на нам 1 и нам 2 >10
+            if (num1 > 10 || num2 > 10) {
+                throw new IllegalArgumentException("Одно из введённых чисел больше 10");
+            }
+    try {
         switch (operator) {
             case '+':
                 return num1 + num2;
@@ -169,12 +154,20 @@ class CalculatorEngine {
                 return num1 - num2;
             case '*':
                 return num1 * num2;
-            case '/': //Catch деление на ноль
-                if (num1 != 0 || num2 != 0) {
+            case '/':
+                if (num2 != 0) {
                     return num1 / num2;
+                } else {
+                    throw new ArithmeticException("Деление на ноль");
                 }
-                break;
+            default:
+                throw new IllegalArgumentException("О Некорректный оператор");
         }
+    } catch (Exception e) {
+        System.out.println("Ошибка: " + e.getMessage());
         return Integer.MIN_VALUE;
     }
 }
+    }
+
+
