@@ -1,4 +1,4 @@
-import java.util.Scanner;
+package com.company;
 
 public class CalculatorLauncher {
     public static void main(String[] args) {
@@ -17,11 +17,7 @@ class Calculator {
 
 ////      String input = "3 - IV";
 //        String input = "1 +2 +3";
-          String input = "XII/ X";
-
-
-
-
+        String input = "X - I";
 
         try {
             String result = calculateResult(input);
@@ -34,14 +30,14 @@ class Calculator {
     }
 
     private String calculateResult(String input) {
-        String inputWithoutSpacesAndSymbols = StringManipulator.removeSpacesAndSymbols(input);
-        String[] parts = StringManipulator.splitInput(inputWithoutSpacesAndSymbols);
+        String inputWithoutSpaces = StringManipulator.removeSpaces(input);
+        String[] parts = StringManipulator.splitInput(inputWithoutSpaces);
 
         if (parts.length != 2) {
             throw new IllegalArgumentException("Некорректное количество чисел или операторов");
         }
 
-        char operator = inputWithoutSpacesAndSymbols.charAt(parts[0].length());
+        char operator = inputWithoutSpaces.charAt(parts[0].length());
 
         int num1, num2, sum;
         if (StringManipulator.containsRomanNumerals(parts[0]) && StringManipulator.containsRomanNumerals(parts[1])) {
@@ -66,7 +62,7 @@ class Calculator {
 }
 
 class StringManipulator {
-    public static String removeSpacesAndSymbols(String input) {
+    public static String removeSpaces(String input) {
         return input.replaceAll("\\s+", "");
     }
 
@@ -85,60 +81,48 @@ class StringManipulator {
 
 class NumberConverter {
     public static int convertRomanToArabic(String number) {
-    switch (number) {
-        case "I":
-            return 1;
-        case "II":
-            return 2;
-        case "III":
-            return 3;
-        case "IV":
-            return 4;
-        case "V":
-            return 5;
-        case "VI":
-            return 6;
-        case "VII":
-            return 7;
-        case "VIII":
-            return 8;
-        case "IX":
-            return 9;
-        case "X":
-            return 10;
-        default:
-            try {
-                int num = Integer.parseInt(number);
-                if (num > 0 && num <= 10) {
-                    return num;
-                } else {
-                    throw new IllegalArgumentException("Число должно быть от 1 до 10"); //WTF
-                }
-            } catch (NumberFormatException e) {
+        switch (number) {
+            case "I":
+                return 1;
+            case "II":
+                return 2;
+            case "III":
+                return 3;
+            case "IV":
+                return 4;
+            case "V":
+                return 5;
+            case "VI":
+                return 6;
+            case "VII":
+                return 7;
+            case "VIII":
+                return 8;
+            case "IX":
+                return 9;
+            case "X":
+                return 10;
+            default:
                 throw new IllegalArgumentException("Некорректное римское число или число больше 10");
-            }
-    }
-}
-
-
-    public static String convertArabicToRoman(int num) {
-        if (num > 0) {
-            StringBuilder sb = new StringBuilder();
-            int times;
-            String[] romans = new String[]{"I", "IV", "V", "IX", "X"};
-            int[] ints = new int[]{1, 4, 5, 9, 10};
-            for (int i = ints.length - 1; i >= 0; i--) {
-                times = num / ints[i];
-                num %= ints[i];
-                while (times > 0) {
-                    sb.append(romans[i]);
-                    times--;
-                }
-            }
-            return sb.toString();
-        } else {
-            throw new IllegalArgumentException("Ошибка. В римском счислении нет отрицательных чисел");
         }
+    }
+
+
+        public static String convertArabicToRoman(int num) {
+        if (num <= 0) {
+            throw new IllegalArgumentException("Результат не может быть отрицательным или равным нулю");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        String[] romans = new String[]{"I", "IV", "V", "IX", "X"};
+        int[] ints = new int[]{1, 4, 5, 9, 10};
+        for (int i = ints.length - 1; i >= 0; i--) {
+            while (num >= ints[i]) {
+                sb.append(romans[i]);
+                num = num - ints[i];
+            }
+        }
+        return sb.toString();
     }
 }
 
