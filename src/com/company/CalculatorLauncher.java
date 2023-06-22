@@ -39,9 +39,6 @@ class Calculator {
         if (inputWithoutSpaces.matches(".*[+\\-*/]{2,}.*")) {
             throw new IllegalArgumentException("Операторы не могут следовать друг за другом");
         }
-//        if (parts.length > 2) {
-//            throw new IllegalArgumentException("Некорректное количество чисел, можно ввести не более двух");
-//        }
         if (parts.length != 2) {
             throw new IllegalArgumentException("Некорректное количество чисел, операторов или число отрицательное");
         }
