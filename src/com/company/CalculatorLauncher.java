@@ -70,7 +70,7 @@ class Calculator {
 
                 return String.valueOf(CalculatorEngine.calculate(num1, num2, operator));
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Должна быть введена только пара арабских или пара римских цифр, " +
+                throw new IllegalArgumentException("Должна быть введена только пара арабских или пара римских чисел, " +
                         "каждое число в диапазоне от 1 до 10");
             }
         }
