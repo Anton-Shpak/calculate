@@ -86,7 +86,7 @@ class StringManipulator {
         if (input.matches(".*[+\\-*/].*")) {
             return input.split("[+\\-*/]");
         } else {
-            throw new IllegalArgumentException("Некорректный оператор");
+            throw new IllegalArgumentException("Оператор некорректный, либо отсутствует");
         }
     }
 
